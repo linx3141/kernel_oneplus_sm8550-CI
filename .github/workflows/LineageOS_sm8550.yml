@@ -42,16 +42,16 @@ jobs:
         mv kernel.zip ${GITHUB_WORKSPACE}/ksu-next.zip
         git clean -fdx && find . -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/.git" \; -print | xargs rm -rf && git reset --hard
         cd -
-
-#    - name: Build Kernel with ksu-next + susfs
-#      run: |
-#        cd kernel/oneplus/sm8550
-#        build_sm8550 --clean --ksu-next-susfs
-#        mv kernel.zip ${GITHUB_WORKSPACE}/ksu-next-susfs.zip
-#        git clean -fdx && find . -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/.git" \; -print | xargs rm -rf && git reset --hard
-#        cd -
+  
+    - name: Build Kernel with sukisu
+      run: |
+        cd kernel/oneplus/sm8550
+        build_sm8550 --clean --sukisu
+        mv kernel.zip ${GITHUB_WORKSPACE}/sukisu.zip
+        git clean -fdx && find . -mindepth 1 -maxdepth 1 -type d -exec test -d "{}/.git" \; -print | xargs rm -rf && git reset --hard
+        cd -
 
     - name: Create GitHub Release
       run: |
         cd ${GITHUB_WORKSPACE}
-        gh release create "$REL_NAME" --title "$REL_NAME" --notes "" ksu.zip ksu-next.zip
+        gh release create "$REL_NAME" --title "$REL_NAME" --notes "" ksu.zip ksu-next.zip sukisu.zip
